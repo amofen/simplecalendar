@@ -1,29 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univevry.aos.simplecalendar.utilisateur;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Enima
+ * @author amine
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
+@NamedQuery(name = "Utilisateur.findByEmail",query = "SELECT u FROM Utilisateur u where u.email=:email")
 public class Utilisateur {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
     private String nom;
+    @Column(nullable = false)
     private String prenom;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String motDePasse;
 
     public Utilisateur() {
     }
 
+    public Utilisateur( String nom, String prenom, String email, String motDePasse) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.motDePasse = motDePasse;
+    }
+    
     public long getId() {
         return id;
     }

@@ -7,23 +7,42 @@ package fr.univevry.aos.simplecalendar.invitation;
 
 import fr.univevry.aos.simplecalendar.evenement.Evenement;
 import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Enima
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"EVENEMENT_ID", "INVITE_ID","REPONSE"}))
+@NamedQueries({
+    @NamedQuery(name="Invitation.findByInvite",query = "SELECT i FROM Invitation i WHERE i.invite.id=:inviteId"),
+    @NamedQuery(name="Invitation.findByHote",query="SELECT i FROM Invitation i WHERE i.hote.id=:hoteId")})
 public class Invitation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private boolean reponse;
+    @Column(nullable = false)
+    private boolean reponse = false;
     private String message;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "EVENEMENT_ID",nullable = false)
     private Evenement evenement;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "HOTE_ID",nullable = false)
+    private Utilisateur hote;
+    @ManyToOne
+    @JoinColumn(name = "INVITE_ID",nullable = false)
     private Utilisateur invite;
 
     public Invitation() {
@@ -68,6 +87,15 @@ public class Invitation {
     public void setInvite(Utilisateur invite) {
         this.invite = invite;
     }
+
+    public Utilisateur getHote() {
+        return hote;
+    }
+
+    public void setHote(Utilisateur hote) {
+        this.hote = hote;
+    }
+    
     
     
     

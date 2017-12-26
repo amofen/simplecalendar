@@ -1,32 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univevry.aos.simplecalendar.evenement;
 
 import fr.univevry.aos.simplecalendar.agenda.Agenda;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author Enima
+ * @author amine
  */
 @Entity
+@NamedQuery(name ="Evenement.findByAgendaId", query="SELECT e FROM Evenement e WHERE e.agenda.id=:agendaId ")
 public class Evenement {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
     private String titre;
     private String descriptif;
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateDebut;
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateFin;
     private String lieu;
     private int priorite;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Agenda agenda;
 
     public Evenement() {
@@ -86,6 +97,14 @@ public class Evenement {
 
     public void setPriorite(int priorite) {
         this.priorite = priorite;
+    }
+
+    public Agenda getAgenda() {
+        return agenda;
+    }
+
+    public void setAgenda(Agenda agenda) {
+        this.agenda = agenda;
     }
     
     

@@ -1,28 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univevry.aos.simplecalendar.agenda;
 
-import fr.univevry.aos.simplecalendar.evenement.Evenement;
 import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Enima
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"NOM", "UTILISATEUR_ID"}))
+@NamedQuery(name = "Agenda.findAgendasByUtilisateurId", query = "SELECT a FROM Agenda AS a WHERE a.utilisateur.id=:utilisateurId")
 public class Agenda {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
     private String nom;
+    
     @ManyToOne
+    @JoinColumn(name = "UTILISATEUR_ID",nullable = false)
     private Utilisateur utilisateur;
 
     public Agenda() {
@@ -52,6 +59,4 @@ public class Agenda {
         this.utilisateur = utilisateur;
     }
 
-    
-    
 }

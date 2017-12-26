@@ -1,14 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univevry.aos.simplecalendar.utilisateur;
+
+import fr.univevry.aos.simplecalendar.dbConfig.DbStatutOperation;
+import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import static jdk.nashorn.internal.runtime.Context.printStackTrace;
 
 /**
  *
- * @author Enima
+ * @author amine
  */
+@Stateless
 public class UtilisateurManager {
-    
+
+    @PersistenceContext(name = "MainPU")
+    EntityManager em;
+
+    public Utilisateur findUtilisateurByEmail(String email) {
+        try {
+            Utilisateur utilisateur = (Utilisateur) em.createNamedQuery("Utilisateur.findByEmail").
+                    setParameter("email", email).
+                    getSingleResult();
+            return utilisateur;
+        } catch (Exception e) {
+            printStackTrace(e);
+            return null;
+        }
+    }
+
+    public int addUtilisateur(Utilisateur utilisateur) {
+        try {
+            em.persist(utilisateur);
+        } catch (EntityExistsException ex) {
+            printStackTrace(ex);
+            return DbStatutOperation.ECHEC;
+        }
+        return DbStatutOperation.REUSSI;
+    }
+
+    public int updateUtilisateur(Utilisateur utilisateur) {
+        try {
+            em.getTransaction().begin();
+            em.merge(utilisateur);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            printStackTrace(e);
+            return DbStatutOperation.ECHEC;
+        }
+        return DbStatutOperation.REUSSI;
+    }
+
+    public int removeUtilisateur(String email) {
+        Utilisateur utilisateur = findUtilisateurByEmail(email);
+        return removeUtilisateur(utilisateur);
+    }
+
+    public int removeUtilisateur(long utilisateurId) {
+        Utilisateur utilisateur = em.find(Utilisateur.class, utilisateurId);
+        return removeUtilisateur(utilisateur);
+    }
+
+    public int removeUtilisateur(Utilisateur utilisateur) {
+        try {
+            em.getTransaction().begin();
+            em.remove(utilisateur);
+            em.getTransaction().commit();
+        } catch (EntityExistsException ex) {
+            printStackTrace(ex);
+            return DbStatutOperation.ECHEC;
+        }
+        return DbStatutOperation.REUSSI;
+    }
 }
