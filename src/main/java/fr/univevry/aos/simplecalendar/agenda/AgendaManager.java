@@ -82,7 +82,6 @@ public class AgendaManager {
         List<Agenda> agendas = em.createNamedQuery("Agenda.findAgendasByUtilisateurId").
                 setParameter("utilisateurId",utilisateurId ).
                 getResultList();
-        if(agendas.isEmpty()) return null;
         return agendas;
     }
 }

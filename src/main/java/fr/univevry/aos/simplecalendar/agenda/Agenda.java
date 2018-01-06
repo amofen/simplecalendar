@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"NOM", "UTILISATEUR_ID"}))
 @NamedQuery(name = "Agenda.findAgendasByUtilisateurId", query = "SELECT a FROM Agenda AS a WHERE a.utilisateur.id=:utilisateurId")
+@XmlRootElement
 public class Agenda {
 
     @Id

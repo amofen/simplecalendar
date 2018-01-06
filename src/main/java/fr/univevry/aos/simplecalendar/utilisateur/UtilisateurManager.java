@@ -17,6 +17,16 @@ public class UtilisateurManager {
     @PersistenceContext(name = "MainPU")
     EntityManager em;
 
+    public Utilisateur findUtilisateurById(long id) {
+        try {
+            Utilisateur utilisateur = (Utilisateur) em.find(Utilisateur.class, id);
+            return utilisateur;
+        } catch (Exception e) {
+            printStackTrace(e);
+            return null;
+        }
+    }
+
     public Utilisateur findUtilisateurByEmail(String email) {
         try {
             Utilisateur utilisateur = (Utilisateur) em.createNamedQuery("Utilisateur.findByEmail").
