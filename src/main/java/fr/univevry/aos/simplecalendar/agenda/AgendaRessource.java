@@ -30,17 +30,20 @@ public class AgendaRessource {
 
     public AgendaRessource() {
     }
+    
     @GET
     public Response getAllAgendas(@PathParam("utilisateurId") long utilisateurId) {
 
         List<Agenda> agendas = am.findAgendasByUtilisateurId(utilisateurId);
         if (!agendas.isEmpty()) {
-            GenericEntity< List< Agenda>> entity = new GenericEntity<List< Agenda>>(agendas) {
+            GenericEntity< List< Agenda>> list = new GenericEntity<List< Agenda>>(agendas) {
             };
-            return Response.ok(entity).build();
+            return Response.ok(list)
+                    .build();
         }
         else{
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT)
+                    .build();
         }
         
     }
