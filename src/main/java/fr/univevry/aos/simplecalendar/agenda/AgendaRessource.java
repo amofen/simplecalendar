@@ -44,4 +44,9 @@ public class AgendaRessource {
         }
         
     }
+    
+    @Path("{agendaId}/evenement")
+    public EvenementResource getEvenementRessource(){
+        return er;
+    }
 }
