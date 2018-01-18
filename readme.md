@@ -16,6 +16,7 @@ http://servername:port/simplecalendar/utilisateur
 
 
 http://servername:port/simplecalendar/utilisateur/{userId}/agenda/{agendaId} H
+
 . | @GET | userId | pas de contenu | 200ok : 204 pas de contenu : 401 non authentifier : 403 interdit |Retourner la liste des agendas du user  
 . | @POST | userId | agenda | 201created :208already reported : 401 non authentifier | Créer un agenda
 
