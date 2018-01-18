@@ -7,9 +7,11 @@
 
 
  CHEMIN | METHOD | URL PARAMS | CONTENT | CODES RETOUR | DSC
+ 
 http://servername:port/simplecalendar/utilisateur
 
 . | @POST | aucun parametre | nomUtilisateur , motDePasse | 200 : 401 (non authentifié) | Retourner le profil utilisateur et un Token en cas de succès
+
 
 
 
@@ -24,6 +26,8 @@ http://servername:port/simplecalendar/utilisateur/{userId}/agenda/{agendaId} H
 
 
 /{agendaId} | @DELETE | userId agendaId | pas de contenu | 200ok : 401 non authentifier | supprimer agenda
+
+
 
 http://servername:port/simplecalendar/utilisateur/{userId}/agenda/{agendaId}/evenement C
 
