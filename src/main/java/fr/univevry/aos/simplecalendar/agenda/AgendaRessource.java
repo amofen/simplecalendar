@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.PUT;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -24,7 +23,6 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("/")
-@Produces(MediaType.APPLICATION_JSON)
 public class AgendaRessource {
 
     @Inject
@@ -36,7 +34,7 @@ public class AgendaRessource {
 
     public AgendaRessource() {
     }
-    
+
     @GET
     public Response getAllAgendas(@PathParam("utilisateurId") long utilisateurId) {
 
@@ -46,72 +44,65 @@ public class AgendaRessource {
             };
             return Response.ok(list)
                     .build();
-        }
-        else{
+        } else {
             return Response.status(Response.Status.NO_CONTENT)
                     .build();
         }
-        
+
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createAgenda (Agenda agenda){
-        
-        if (am.addAgenda(agenda)== DbStatutOperation.REUSSI) {
+    public Response createAgenda(Agenda agenda) {
+
+        if (am.addAgenda(agenda) == DbStatutOperation.REUSSI) {
             return Response.ok().entity(agenda).build();
-        } else{
-          return Response.status(208).build();  
-        }     
-        
+        } else {
+            return Response.status(208).build();
+        }
+
     }
-    
+
     @Path("/{agendaId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response returnAgenda (@PathParam("agendaId") long agendaId){
-        
+    public Response returnAgenda(@PathParam("agendaId") long agendaId) {
+
         Agenda agenda = am.findAgendaById(agendaId);
-         if (agenda != null) {
-          return Response.ok(agenda).build();
-        }
-        else{
+        if (agenda != null) {
+            return Response.ok(agenda).build();
+        } else {
             return Response.status(Response.Status.NO_CONTENT).build();
-        } 
+        }
     }
-    
+
     @Path("/{agendaId}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifAgenda(@PathParam("agendaId") long agendaId, Agenda agenda){
-     
+    public Response modifAgenda(@PathParam("agendaId") long agendaId, Agenda agenda) {
         Agenda agd = am.findAgendaById(agendaId);
-        agenda.setUtilisateur(agd.getUtilisateur());
-        agenda.setId(agendaId);
-      
-     
-      if (am.updateAgenda(agenda)== DbStatutOperation.REUSSI) {
-            return Response.ok().entity(agenda).build();
-        } else{
-          return Response.status(Response.Status.NOT_MODIFIED).build();  
-        }       
-    }  
-    
+        agd.setNom(agenda.getNom());
+        if (am.updateAgenda(agd) == DbStatutOperation.REUSSI) {
+            return Response.ok().entity(agd).build();
+        } else {
+            return Response.status(Response.Status.NOT_MODIFIED).build();
+        }
+    }
+
     @Path("/{agendaId}")
     @DELETE
-    public Response removeAgenda(@PathParam("agendaId") long agendaId){
-        Agenda agenda = am.findAgendaById(agendaId);
-        if (am.removeAgenda(agenda)== DbStatutOperation.REUSSI) {
-            return Response.ok().entity(agenda).build();
-        } else{
-          return Response.status(Response.Status.NOT_ACCEPTABLE).build();  
-        }   
-        
+    public Response removeAgenda(@PathParam("agendaId") long agendaId) {
+        if (am.removeAgenda(agendaId) == DbStatutOperation.REUSSI) {
+            return Response.ok().build();
+        } else {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+
     }
-    
+
     @Path("{agendaId}/evenement")
-    public EvenementResource getEvenementRessource(){
+    public EvenementResource getEvenementRessource() {
         return er;
     }
 }

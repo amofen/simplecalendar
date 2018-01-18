@@ -15,9 +15,6 @@ public class EvenementResource {
     @Inject
     InvitationResource ir;
     
-    
-    
-    
     @Path("{evenementId}/invitation")
     public InvitationResource  getInivitationResource(){
         return ir;
