@@ -33,9 +33,9 @@ public class AgendaManager {
     
     public int addAgenda(Agenda agenda){
         try {
-            em.getTransaction().begin();
+            
             em.persist(agenda);
-            em.getTransaction().commit();
+            
         } catch (EntityExistsException ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
@@ -51,9 +51,9 @@ public class AgendaManager {
 
     public int removeAgenda(Agenda agenda) {
         try {
-            em.getTransaction().begin();
+            
             em.remove(agenda);
-            em.getTransaction().commit();
+          
         } catch (EntityExistsException ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
@@ -63,9 +63,9 @@ public class AgendaManager {
     
     public int updateAgenda(Agenda agenda){
         try{
-            em.getTransaction().begin();
+            
             em.merge(agenda);
-            em.getTransaction().commit();
+            
         }
         catch(Exception e){
             printStackTrace(e);
