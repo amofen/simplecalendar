@@ -27,7 +27,8 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"EVENEMENT_ID", "INVITE_ID","REPONSE"}))
 @NamedQueries({
     @NamedQuery(name="Invitation.findByInvite",query = "SELECT i FROM Invitation i WHERE i.invite.id=:inviteId"),
-    @NamedQuery(name="Invitation.findByHote",query="SELECT i FROM Invitation i WHERE i.hote.id=:hoteId")})
+    @NamedQuery(name="Invitation.findByHote",query="SELECT i FROM Invitation i WHERE i.hote.id=:hoteId"),
+    @NamedQuery(name="Invitation.findByEvenement",query = "SELECT i FROM Invitation i WHERE i.evenement.id=:evenementId")})
 public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

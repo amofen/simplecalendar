@@ -91,4 +91,11 @@ public class InvitationManager {
         if(invitations.isEmpty()) return null;
         return invitations;
     }
+    public List<Invitation> findInvitationsByEvenementId(long evenementId){
+        List<Invitation> invitations = em.createNamedQuery("Invitation.findByEvenement").
+                setParameter("evenementId",evenementId ).
+                getResultList();
+        if(invitations.isEmpty()) return null;
+        return invitations;
+    }
 }
