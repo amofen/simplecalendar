@@ -2,8 +2,6 @@ package fr.univevry.aos.simplecalendar.rappel;
 
 import fr.univevry.aos.simplecalendar.dbConfig.DbStatutOperation;
 import fr.univevry.aos.simplecalendar.evenement.Evenement;
-import fr.univevry.aos.simplecalendar.rappel.Rappel;
-import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityExistsException;
@@ -77,7 +75,6 @@ public class RappelManager {
         List<Rappel> rappels = em.createNamedQuery("Rappel.findByEvenement").
                 setParameter("evenementId",evenementId ).
                 getResultList();
-        if(rappels.isEmpty()) return null;
         return rappels;
     }
 

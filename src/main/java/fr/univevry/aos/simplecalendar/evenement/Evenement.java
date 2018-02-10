@@ -14,6 +14,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -21,23 +25,27 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @NamedQuery(name ="Evenement.findByAgendaId", query="SELECT e FROM Evenement e WHERE e.agenda.id=:agendaId ")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Evenement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false)
     private long id;
     @Column(nullable = false)
     private String titre;
     private String descriptif;
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date dateDebut;
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date dateFin;
     private String lieu;
     private int priorite;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false,updatable = false)
+    @XmlTransient
     private Agenda agenda;
 
     public Evenement() {

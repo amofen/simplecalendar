@@ -2,6 +2,8 @@ package fr.univevry.aos.simplecalendar.agenda;
 
 import fr.univevry.aos.simplecalendar.dbConfig.DbStatutOperation;
 import fr.univevry.aos.simplecalendar.evenement.EvenementResource;
+import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
+import fr.univevry.aos.simplecalendar.utilisateur.UtilisateurManager;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,11 +24,15 @@ import javax.ws.rs.core.Response;
  * @author amine
  */
 @Stateless
-@Path("/")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class AgendaRessource {
 
     @Inject
     AgendaManager am;
+    
+    @Inject
+    UtilisateurManager um;
 
     //Sub-resources
     @Inject
@@ -51,22 +57,9 @@ public class AgendaRessource {
 
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createAgenda(Agenda agenda) {
-
-        if (am.addAgenda(agenda) == DbStatutOperation.REUSSI) {
-            return Response.ok().entity(agenda).build();
-        } else {
-            return Response.status(208).build();
-        }
-
-    }
-
     @Path("/{agendaId}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response returnAgenda(@PathParam("agendaId") long agendaId) {
+    public Response getAgendaById(@PathParam("agendaId") long agendaId) {
 
         Agenda agenda = am.findAgendaById(agendaId);
         if (agenda != null) {
@@ -76,11 +69,22 @@ public class AgendaRessource {
         }
     }
 
+    @POST
+    public Response createAgenda(@PathParam("utilisateurId")long utilisateurId, Agenda agenda) {
+
+        Utilisateur utilisateur = um.findUtilisateurById(utilisateurId);
+        agenda.setUtilisateur(utilisateur);
+        if (am.addAgenda(agenda) == DbStatutOperation.REUSSI) {
+            return Response.ok().entity(agenda).build();
+        } else {
+            return Response.status(208).build();
+        }
+
+    }
+
     @Path("/{agendaId}")
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response modifAgenda(@PathParam("agendaId") long agendaId, Agenda agenda) {
+    public Response updateAgenda(@PathParam("agendaId") long agendaId, Agenda agenda) {
         Agenda agd = am.findAgendaById(agendaId);
         agd.setNom(agenda.getNom());
         if (am.updateAgenda(agd) == DbStatutOperation.REUSSI) {
@@ -92,7 +96,7 @@ public class AgendaRessource {
 
     @Path("/{agendaId}")
     @DELETE
-    public Response removeAgenda(@PathParam("agendaId") long agendaId) {
+    public Response deleteAgenda(@PathParam("agendaId") long agendaId) {
         if (am.removeAgenda(agendaId) == DbStatutOperation.REUSSI) {
             return Response.ok().build();
         } else {

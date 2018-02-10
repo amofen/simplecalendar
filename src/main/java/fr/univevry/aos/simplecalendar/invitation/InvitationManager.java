@@ -80,7 +80,6 @@ public class InvitationManager {
         List<Invitation> invitations = em.createNamedQuery("Invitation.findByInvite").
                 setParameter("inviteId",inviteId ).
                 getResultList();
-        if(invitations.isEmpty()) return null;
         return invitations;
     }
     
@@ -88,14 +87,12 @@ public class InvitationManager {
         List<Invitation> invitations = em.createNamedQuery("Invitation.findByHote").
                 setParameter("hoteId",hoteId ).
                 getResultList();
-        if(invitations.isEmpty()) return null;
         return invitations;
     }
     public List<Invitation> findInvitationsByEvenementId(long evenementId){
         List<Invitation> invitations = em.createNamedQuery("Invitation.findByEvenement").
                 setParameter("evenementId",evenementId ).
                 getResultList();
-        if(invitations.isEmpty()) return null;
         return invitations;
     }
 }

@@ -38,9 +38,7 @@ public class EvenementManager {
     
     public int addEvenement(Evenement evenement){
         try {
-            em.getTransaction().begin();
             em.persist(evenement);
-            em.getTransaction().commit();
         } catch (EntityExistsException ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
@@ -54,6 +52,7 @@ public class EvenementManager {
     }
 
     public int removeEvenement(Evenement evenement) {
+        if(evenement==null)return DbStatutOperation.ECHEC;
         try {
             em.remove(evenement);
         } catch (EntityExistsException ex) {
@@ -74,7 +73,7 @@ public class EvenementManager {
         return DbStatutOperation.REUSSI;
     }
     
-    public Evenement findAgendaById(long evenementId){
+    public Evenement findEvenementById(long evenementId){
         return em.find(Evenement.class, evenementId);
     }
     
@@ -82,7 +81,6 @@ public class EvenementManager {
         List<Evenement> evenements = em.createNamedQuery("Evenement.findByAgendaId").
                 setParameter("agendaId",agendaId ).
                 getResultList();
-        if(evenements.isEmpty()) return null;
         return evenements;
     }
 }

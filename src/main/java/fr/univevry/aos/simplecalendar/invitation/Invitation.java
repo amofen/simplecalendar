@@ -5,6 +5,7 @@
  */
 package fr.univevry.aos.simplecalendar.invitation;
 
+
 import fr.univevry.aos.simplecalendar.evenement.Evenement;
 import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
 import javax.persistence.Column;
@@ -18,6 +19,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,6 +34,8 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name="Invitation.findByInvite",query = "SELECT i FROM Invitation i WHERE i.invite.id=:inviteId"),
     @NamedQuery(name="Invitation.findByHote",query="SELECT i FROM Invitation i WHERE i.hote.id=:hoteId"),
     @NamedQuery(name="Invitation.findByEvenement",query = "SELECT i FROM Invitation i WHERE i.evenement.id=:evenementId")})
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +45,7 @@ public class Invitation {
     private String message;
     @ManyToOne
     @JoinColumn(name = "EVENEMENT_ID",nullable = false)
+    @XmlTransient
     private Evenement evenement;
     @ManyToOne
     @JoinColumn(name = "HOTE_ID",nullable = false)

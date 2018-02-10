@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -19,6 +23,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQuery(name = "Rappel.findByEvenement",query = "SELECT r FROM Rappel r WHERE r.evenement.id=:evenementId")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Rappel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +34,7 @@ public class Rappel {
     private Date date;
     @ManyToOne
     @JoinColumn(name = "EVENEMENT_ID",nullable = false)
+    @XmlTransient
     private Evenement evenement;
 
     public Rappel() {

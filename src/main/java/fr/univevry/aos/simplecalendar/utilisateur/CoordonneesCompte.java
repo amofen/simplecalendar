@@ -5,10 +5,13 @@
  */
 package fr.univevry.aos.simplecalendar.utilisateur;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author enima
  */
+@XmlRootElement
 public class CoordonneesCompte {
     private String email; 
     private String motDePasse;
@@ -20,8 +23,8 @@ public class CoordonneesCompte {
         return email;
     }
 
-    public void setNomUtilisateur(String nomUtilisateur) {
-        this.email = nomUtilisateur;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMotDePasse() {
@@ -31,5 +34,8 @@ public class CoordonneesCompte {
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
     }
+
+    
+
     
 }

@@ -1,5 +1,6 @@
 package fr.univevry.aos.simplecalendar.utilisateur;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -17,6 +21,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
 @NamedQuery(name = "Utilisateur.findByEmail",query = "SELECT u FROM Utilisateur u where u.email=:email")
+@XmlRootElement
 public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +33,7 @@ public class Utilisateur {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
+    @XmlTransient
     private String motDePasse;
 
     public Utilisateur() {
@@ -71,7 +77,6 @@ public class Utilisateur {
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getMotDePasse() {
         return motDePasse;
     }
