@@ -36,7 +36,7 @@ public class AgendaManager {
             
             em.persist(agenda);
             
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }

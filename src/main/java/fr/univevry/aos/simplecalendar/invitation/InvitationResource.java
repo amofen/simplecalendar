@@ -1,6 +1,8 @@
 package fr.univevry.aos.simplecalendar.invitation;
 
 import fr.univevry.aos.simplecalendar.dbConfig.DbStatutOperation;
+import fr.univevry.aos.simplecalendar.evenement.Evenement;
+import fr.univevry.aos.simplecalendar.evenement.EvenementManager;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -27,6 +29,9 @@ public class InvitationResource {
     @Inject
     InvitationManager im;
 
+    @Inject
+    EvenementManager em;
+    
     public InvitationResource() {
 
     }
@@ -59,9 +64,11 @@ public class InvitationResource {
     }
 
     @POST
-    public Response createInvitation(Invitation invitation) {
+    public Response createInvitation(@PathParam("evenementId")long evenementId ,Invitation invitation) {
+        Evenement evenement = em.findEvenementById(evenementId);
+        invitation.setEvenement(evenement);
         if (im.addInvitation(invitation) == DbStatutOperation.REUSSI) {
-            return Response.ok().entity(invitation).build();
+            return Response.status(Response.Status.CREATED).entity(invitation).build();
         } else {
             return Response.status(208).build();
         }

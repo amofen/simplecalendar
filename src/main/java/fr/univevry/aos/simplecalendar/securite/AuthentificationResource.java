@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univevry.aos.simplecalendar.securite;
 
 import fr.univevry.aos.simplecalendar.utilisateur.CoordonneesCompte;
@@ -10,9 +5,6 @@ import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
 import fr.univevry.aos.simplecalendar.utilisateur.UtilisateurManager;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import javax.ejb.Stateless;
@@ -47,18 +39,24 @@ public class AuthentificationResource {
         }
         else{
             long temps = System.currentTimeMillis();
-
+            Date dateExpiration = new Date(temps+600000);
             String jwt = Jwts.builder()
                              .signWith(SignatureAlgorithm.RS256,SecuriteFiltre.SIGNINIG_KEY)
                              .setSubject(utilisateur.getNom()+" "+utilisateur.getPrenom())
                              .setIssuedAt(new Date(temps))
-                             .setExpiration(new Date(temps+3600000))
+                             .setExpiration(dateExpiration)
                              .claim("userId", utilisateur.getId())
                              .compact();
-            JsonWebToken jwtObject = new JsonWebToken();
-            jwtObject.setJWT(jwt);
+            AutorisationObject autorisationObject = new AutorisationObject();
+            autorisationObject.setJWT(jwt);
+            autorisationObject.setEmail(utilisateur.getEmail());
+            autorisationObject.setId(utilisateur.getId());
+            autorisationObject.setNom(utilisateur.getNom());
+            autorisationObject.setPrenom(utilisateur.getPrenom());
+            autorisationObject.setExpiration(dateExpiration.getTime()/1000);
+            
             return Response.status(Response.Status.CREATED)
-                    .entity(jwtObject)
+                    .entity(autorisationObject)
                     .build();
         }
     }

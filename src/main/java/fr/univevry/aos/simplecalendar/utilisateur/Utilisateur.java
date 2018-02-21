@@ -1,6 +1,7 @@
 package fr.univevry.aos.simplecalendar.utilisateur;
 
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -22,7 +23,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
 @NamedQuery(name = "Utilisateur.findByEmail",query = "SELECT u FROM Utilisateur u where u.email=:email")
 @XmlRootElement
-public class Utilisateur {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Utilisateur implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

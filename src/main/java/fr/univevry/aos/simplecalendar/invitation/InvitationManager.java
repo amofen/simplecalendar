@@ -38,7 +38,7 @@ public class InvitationManager {
     public int addInvitation(Invitation invitation){
         try {
             em.persist(invitation);
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }
@@ -54,7 +54,7 @@ public class InvitationManager {
     public int removeInvitation(Invitation invitation) {
         try {
             em.remove(invitation);
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }

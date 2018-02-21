@@ -33,7 +33,7 @@ public class RappelManager {
     public int addRappel(Rappel rappel){
         try {
             em.persist(rappel);
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }

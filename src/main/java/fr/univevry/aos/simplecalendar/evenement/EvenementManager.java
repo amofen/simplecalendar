@@ -39,7 +39,7 @@ public class EvenementManager {
     public int addEvenement(Evenement evenement){
         try {
             em.persist(evenement);
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }

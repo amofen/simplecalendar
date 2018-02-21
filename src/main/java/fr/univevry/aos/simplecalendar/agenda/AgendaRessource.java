@@ -75,7 +75,7 @@ public class AgendaRessource {
         Utilisateur utilisateur = um.findUtilisateurById(utilisateurId);
         agenda.setUtilisateur(utilisateur);
         if (am.addAgenda(agenda) == DbStatutOperation.REUSSI) {
-            return Response.ok().entity(agenda).build();
+            return Response.status(Response.Status.CREATED).entity(agenda).build();
         } else {
             return Response.status(208).build();
         }
