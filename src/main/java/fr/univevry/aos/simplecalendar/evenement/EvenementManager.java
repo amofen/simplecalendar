@@ -55,7 +55,7 @@ public class EvenementManager {
         if(evenement==null)return DbStatutOperation.ECHEC;
         try {
             em.remove(evenement);
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }

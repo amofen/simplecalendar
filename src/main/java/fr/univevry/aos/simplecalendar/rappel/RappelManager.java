@@ -49,7 +49,7 @@ public class RappelManager {
     public int removeRappel(Rappel rappel) {
         try {
             em.remove(rappel);
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }

@@ -42,7 +42,7 @@ public class UtilisateurManager {
     public int addUtilisateur(Utilisateur utilisateur) {
         try {
             em.persist(utilisateur);
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }
@@ -76,7 +76,7 @@ public class UtilisateurManager {
             em.getTransaction().begin();
             em.remove(utilisateur);
             em.getTransaction().commit();
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }
