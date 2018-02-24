@@ -1,7 +1,11 @@
 package fr.univevry.aos.simplecalendar.evenement;
 
 import fr.univevry.aos.simplecalendar.agenda.Agenda;
+import fr.univevry.aos.simplecalendar.invitation.Invitation;
+import fr.univevry.aos.simplecalendar.rappel.Rappel;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -41,11 +46,16 @@ public class Evenement {
     private Date dateFin;
     private String lieu;
     private int priorite;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(nullable = false,updatable = false)
     @XmlTransient
     private Agenda agenda;
-
+    @OneToMany(mappedBy = "evenement",cascade=CascadeType.REMOVE)
+    @XmlTransient
+    private List<Invitation> invitations;
+    @OneToMany(mappedBy = "evenement",cascade=CascadeType.REMOVE)
+    @XmlTransient
+    private List<Rappel> rappels;
     public Evenement() {
     }
 

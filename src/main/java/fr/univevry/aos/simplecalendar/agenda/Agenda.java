@@ -1,6 +1,9 @@
 package fr.univevry.aos.simplecalendar.agenda;
 
+import fr.univevry.aos.simplecalendar.evenement.Evenement;
 import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -37,6 +41,10 @@ public class Agenda {
     @JoinColumn(name = "UTILISATEUR_ID",updatable = false)
     @XmlTransient
     private Utilisateur utilisateur;
+    
+    @OneToMany(mappedBy = "agenda",cascade=CascadeType.REMOVE)
+    @XmlTransient
+    private List<Evenement> evenements;
 
     public Agenda() {
     }

@@ -1,6 +1,7 @@
 package fr.univevry.aos.simplecalendar.evenement;
 
 import fr.univevry.aos.simplecalendar.agenda.Agenda;
+import fr.univevry.aos.simplecalendar.agenda.AgendaManager;
 import fr.univevry.aos.simplecalendar.dbConfig.DbStatutOperation;
 import fr.univevry.aos.simplecalendar.invitation.InvitationResource;
 import fr.univevry.aos.simplecalendar.rappel.RappelResource;
@@ -36,6 +37,9 @@ public class EvenementResource {
 
     @Inject
     RappelResource rr;
+    
+    @Inject
+    AgendaManager am;
 
     @GET
     public Response getAllEvenement(@PathParam("agendaId") long agendaId) {
@@ -64,7 +68,8 @@ public class EvenementResource {
     }
 
     @POST
-    public Response createEvenement(Evenement evenement) {
+    public Response createEvenement(@PathParam("agendaId")long agendaId,Evenement evenement) {
+        evenement.setAgenda(am.findAgendaById(agendaId));
         if (em.addEvenement(evenement) == DbStatutOperation.REUSSI) {
             return Response.ok().entity(evenement).build();
         } else {

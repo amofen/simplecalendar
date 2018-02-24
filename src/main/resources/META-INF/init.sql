@@ -19,3 +19,4 @@ INSERT INTO Invitation(id,message,reponse,evenement_id,hote_id,invite_id) VALUES
 INSERT INTO Invitation(id,message,reponse,evenement_id,hote_id,invite_id) VALUES (2,"Je t'invite a mon anniversaire",0,1,1,2);
 
 INSERT INTO Rappel  (id,date,evenement_id) VALUES (1,"20190201",1);
+

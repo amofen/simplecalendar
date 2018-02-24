@@ -36,7 +36,6 @@ public class AgendaManager {
             em.persist(agenda);
 
         } catch (Exception ex) {
-            printStackTrace(ex);
             return DbStatutOperation.ECHEC;
         }
         return DbStatutOperation.REUSSI;
@@ -53,7 +52,7 @@ public class AgendaManager {
             em.remove(agenda);
 
         } catch (Exception ex) {
-            printStackTrace(ex);
+           
             return DbStatutOperation.ECHEC;
         }
         return DbStatutOperation.REUSSI;
