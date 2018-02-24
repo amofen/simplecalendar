@@ -12,7 +12,7 @@ import java.util.Date;
  * @author ultraxion
  */
 public class AutorisationObject {
-    private String JWT;
+    private String jwt;
     private String nom;
     private String prenom;
     private String email;
@@ -23,13 +23,12 @@ public class AutorisationObject {
     public AutorisationObject() {
     }
 
-    public void setJWT(String JWT) {
-        this.JWT = JWT;
-    }
-
-    public String getJWT() {
-        return JWT;
-    }
+    public String getJwt() {
+		return jwt;
+	}
+   public void setJwt(String jwt) {
+	this.jwt = jwt;
+}
 
     public String getNom() {
         return nom;

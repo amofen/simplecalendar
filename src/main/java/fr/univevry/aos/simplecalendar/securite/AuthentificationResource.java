@@ -1,8 +1,5 @@
 package fr.univevry.aos.simplecalendar.securite;
 
-import fr.univevry.aos.simplecalendar.utilisateur.CoordonneesCompte;
-import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
-import fr.univevry.aos.simplecalendar.utilisateur.UtilisateurManager;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +12,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import fr.univevry.aos.simplecalendar.utilisateur.CoordonneesCompte;
+import fr.univevry.aos.simplecalendar.utilisateur.Utilisateur;
+import fr.univevry.aos.simplecalendar.utilisateur.UtilisateurManager;
+import fr.univevry.aos.simplecalendar.securite.SecuriteFiltre;;
 
 /**
  *
@@ -48,7 +49,7 @@ public class AuthentificationResource {
                              .claim("userId", utilisateur.getId())
                              .compact();
             AutorisationObject autorisationObject = new AutorisationObject();
-            autorisationObject.setJWT(jwt);
+            autorisationObject.setJwt(jwt);
             autorisationObject.setEmail(utilisateur.getEmail());
             autorisationObject.setId(utilisateur.getId());
             autorisationObject.setNom(utilisateur.getNom());
